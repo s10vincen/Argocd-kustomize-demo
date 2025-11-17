@@ -6,8 +6,9 @@ on:
       - "**"
 
 jobs:
-  automation:
-    runs-on: [self-hosted, linux]
+  build:
+    runs-on: [self-hosted, linux]  # Uses self-hosted runner with 'linux' label
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v3
+      - name: Run tests
+        run: npm test
