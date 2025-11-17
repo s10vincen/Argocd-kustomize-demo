@@ -1,0 +1,13 @@
+name: CI/CD vinno
+
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  automation:
+    runs-on: [self-hosted, linux]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
