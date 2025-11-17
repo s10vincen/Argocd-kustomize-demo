@@ -14,18 +14,17 @@ spec:
 
     - repoURL: 'https://kubecost.github.io/cost-analyzer/'                     
       chart: cost-analyzer                              # The name of the Helm chart to deploy.
-      targetRevision: "2.8.3"                                    # The version of the Helm chart to deploy.
+      targetRevision: "2.8.13"                                    # The version of the Helm chart to deploy.
       helm:
         releaseName: kubecost     #The Helm release name
         valueFiles:     #Extra override values files.
           - $values/kubecost/dev-values.yaml   # Pulls the file from the other repo defined above line 12
   destination:
     namespace: kubecost      # ArgoCD will deploy resources in this namespace
-    name: 'in-cluster'      # The cluster name. in-cluster means the same cluster where ArgoCD itself is running.
-  syncPolicy:              # Controls how ArgoCD syncs this application.
-    automated:           #Enables auto-sync (no manual clicks needed).
-      prune: true       # Remove resources in the cluster that no longer exist in Git.
-      selfHeal: true     #If resources drift (someone changes them manually), ArgoCD will reset them to match Git.
+    name: 'in-cluster'      
+  syncPolicy:              
+    automated:           
+      prune: true       
     syncOptions:
-      - CreateNamespace=true #If the namespace doesn’t exist, ArgoCD creates it automatically.
-      - ServerSideApply=true  # Uses Kubernetes server-side apply instead of client-side, better for CRDs and large manifests.
+      - CreateNamespace=true #
+      - ServerSideApply=true  
