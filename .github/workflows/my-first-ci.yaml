@@ -7,11 +7,16 @@ on:
 
 jobs:
   first-job:
-    runs-on: self-hosted # Uses self-hosted runner with 'linux' label
+    runs-on: self-hosted
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Welcome message
         run: echo "This is my first GitHub Action job"
-      - name: list all files
+
+      - name: List all files
         run: ls -la
+
       - name: Read file
         run: cat my-first-ci.yaml
