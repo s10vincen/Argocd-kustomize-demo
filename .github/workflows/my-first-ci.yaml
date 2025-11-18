@@ -17,5 +17,5 @@ jobs:
         run: ls -la
 
       - name: Read file
-        run: cat my-first-ci.yaml
+        run: cat .github/workflows/my-first-ci.yaml
 
