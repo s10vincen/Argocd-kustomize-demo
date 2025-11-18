@@ -1,0 +1,17 @@
+name: CI/CD vinno
+
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  first-job:
+    runs-on: self-hosted # Uses self-hosted runner with 'linux' label
+    steps:
+      - name: Welcome message
+        run: echo "This is my first GitHub Action job"
+      - name: list all files
+        run: ls -la
+      - name: Read file
+        run: cat README.md
