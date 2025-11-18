@@ -3,10 +3,14 @@ name: CI/CD vinno
 on:
   push:
     branches:
-      - "**"
+      - main
+      - develop
+
+permissions:
+  contents: read
 
 jobs:
-  first-job:
+  build-and-deploy:
     runs-on: self-hosted
     steps:
       - name: Checkout repository manually
@@ -15,10 +19,27 @@ jobs:
           git checkout ${{ github.sha }}
 
       - name: Welcome message
-        run: echo "This is my first GitHub Action job"
+        run: echo "Running CI/CD pipeline for vinno"
 
-      - name: List all files
+      - name: List files
         run: ls -la
 
-      - name: Read file
-        run: cat .github/workflows/my-first-ci.yaml
+      - name: Lint YAML
+        run: yamllint .
+
+      - name: Validate Kustomize
+        run: kustomize build . --dry-run
+
+      - name: Build Docker image
+        run: docker build -t myapp:latest .
+
+      - name: Push Docker image
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+          docker push myapp:latest
+
+      - name: Argo CD sync
+        run: |
+          argocd app sync my-app \
+            --auth-token ${{ secrets.ARGOCD_TOKEN }} \
+            --server ${{ secrets.ARGOCD_SERVER }}
