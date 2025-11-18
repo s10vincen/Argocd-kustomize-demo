@@ -14,5 +14,4 @@ jobs:
       - name: list all files
         run: ls -la
       - name: Read file
-        run: cat README.md
-        
+        run: cat my-first-ci.yaml
